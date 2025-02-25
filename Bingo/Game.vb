@@ -14,6 +14,7 @@
                     DrawBall()
                 Case "c"
                     BingoTracker(0, 0,, True)
+                    DrawBall(True)
                 Case Else
                     'Pass
             End Select
@@ -22,15 +23,17 @@
         Console.WriteLine("Bye, bye.")
     End Sub
 
-    Sub DrawBall()
+    Sub DrawBall(Optional ClearCounter As Boolean = False)
         Dim Temp(,) As Boolean = BingoTracker(0, 0)
         Dim CurrentBallNumber As Integer
         Dim CurrentBallLetter As Integer
+        Static BallCounter As Integer
         Do
             CurrentBallNumber = RandomNumberBetween(0, 14) 'Get row
             CurrentBallLetter = RandomNumberBetween(0, 4) 'Get columb
-        Loop Until Temp(CurrentBallNumber, CurrentBallLetter) = False
+        Loop Until Temp(CurrentBallNumber, CurrentBallLetter) = False Or BallCounter >= 75
         BingoTracker(CurrentBallNumber, CurrentBallLetter, True)
+        BallCounter += 1
         Console.WriteLine($"The current row is {CurrentBallLetter} and columb is {CurrentBallNumber}.")
     End Sub
 
@@ -67,7 +70,7 @@
         Console.WriteLine(StrDup(20, "_"))
         For currentNumber = 1 To 14
 
-            For CurrentLetter = 1 To 4
+            For CurrentLetter = 0 To 4
                 If DisplayTracker(currentNumber, CurrentLetter) Then
                     Temp = "X  |"
                 Else
