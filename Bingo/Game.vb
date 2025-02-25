@@ -1,12 +1,25 @@
 ﻿Module Game
 
     Sub Main()
-        For i = 0 To 10
+        Dim UserInput As String
+        Do
             BingoBoard()
-            DrawBall()
-            Console.Read()
-            Console.Clear()
-        Next
+            Console.WriteLine()
+            Console.WriteLine("Press ""d"" to draw ball")
+            Console.WriteLine("Press ""c"" to clear")
+            Console.WriteLine("Press ""q"" to quit")
+            UserInput = Console.ReadLine()
+            Select Case UserInput
+                Case "d"
+                    DrawBall()
+                Case "c"
+                    BingoTracker(0, 0,, True)
+                Case Else
+                    'Pass
+            End Select
+        Loop Until UserInput = "q"
+        Console.Clear
+        Console.WriteLine("Bye, bye.")
     End Sub
 
     Sub DrawBall()
@@ -38,6 +51,7 @@
         End If
         If Clear Then
             'Clear the array
+            ReDim Tracker(14, 4) 'with no preserve it will not save data when redim so we can use it to clear
         End If
         Tracker(BallNumber, BallLetter) = True
             Return Tracker
