@@ -41,7 +41,7 @@
         Dim Ball As Single
         Randomize()
         Ball = Rnd()
-        Ball *= Max - Min
+        Ball *= Max + Min
         Ball += Min
         Return CInt(Math.Ceiling(Ball))
     End Function
