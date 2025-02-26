@@ -32,7 +32,7 @@
             CurrentBallNumber = RandomNumberBetween(0, 14) 'Get row
             CurrentBallLetter = RandomNumberBetween(0, 4) 'Get columb
         Loop Until Temp(CurrentBallNumber, CurrentBallLetter) = False Or BallCounter >= 75
-        BingoTracker(CurrentBallNumber, CurrentBallLetter, True)
+        BingoTracker(CurrentBallNumber, CurrentBallLetter, True, False)
         BallCounter += 1
         Console.WriteLine($"The current row is {CurrentBallLetter} and columb is {CurrentBallNumber}.")
     End Sub
@@ -41,7 +41,7 @@
         Dim Ball As Single
         Randomize()
         Ball = Rnd()
-        Ball *= Max + Min
+        Ball *= Max - Min
         Ball += Min
         Return CInt(Math.Ceiling(Ball))
     End Function
@@ -60,7 +60,7 @@
             Return Tracker
     End Function
     Sub BingoBoard()
-        Dim Temp As String = "x  |"
+        Dim Slot As String = "x  |"
         Dim Heading() As String = {"B", "I", "N", "G", "O"}
         Dim DisplayTracker(,) As Boolean = BingoTracker(0, 0)
         For Each letter In Heading
@@ -68,16 +68,16 @@
         Next
         Console.WriteLine()
         Console.WriteLine(StrDup(20, "_"))
-        For currentNumber = 1 To 14
+        For currentNumber = 0 To 14
 
             For CurrentLetter = 0 To 4
                 If DisplayTracker(currentNumber, CurrentLetter) Then
-                    Temp = "X  |"
+                    Slot = "X  |"
                 Else
-                    Temp = "  |"
+                    Slot = "  |"
                 End If
-                Temp = Temp.PadLeft(4)
-                Console.Write(Temp)
+                Slot = Slot.PadLeft(4)
+                Console.Write(Slot)
             Next
             Console.WriteLine()
         Next
