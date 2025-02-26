@@ -41,7 +41,7 @@
         Dim Ball As Single
         Randomize()
         Ball = Rnd()
-        Ball *= Max - Min
+        Ball *= Max + Min
         Ball += Min
         Return CInt(Math.Ceiling(Ball))
     End Function
@@ -68,13 +68,13 @@
         Next
         Console.WriteLine()
         Console.WriteLine(StrDup(20, "_"))
-        For currentNumber = 0 To 14
+        For currentNumber = 1 To 14
 
-            For CurrentLetter = 0 To 4
+            For CurrentLetter = 1 To 4
                 If DisplayTracker(currentNumber, CurrentLetter) Then
-                    Slot = "X  |"
+                    Slot = "|X  |"
                 Else
-                    Slot = "  |"
+                    Slot = "|   |"
                 End If
                 Slot = Slot.PadLeft(4)
                 Console.Write(Slot)
