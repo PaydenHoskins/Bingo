@@ -43,7 +43,7 @@
         Ball = Rnd()
         Ball *= Max + Min
         Ball += Min
-        Return CInt(Math.Ceiling(Ball))
+        Return CInt((Ball))
     End Function
 
     Function BingoTracker(BallNumber As Integer, BallLetter As Integer, Optional Update As Boolean = False, Optional Clear As Boolean = False) As Boolean(,)
@@ -60,7 +60,7 @@
             Return Tracker
     End Function
     Sub BingoBoard()
-        Dim Slot As String = "x  |"
+        Dim Slot As String = "|x  "
         Dim Heading() As String = {"B", "I", "N", "G", "O"}
         Dim DisplayTracker(,) As Boolean = BingoTracker(0, 0)
         For Each letter In Heading
@@ -68,13 +68,13 @@
         Next
         Console.WriteLine()
         Console.WriteLine(StrDup(20, "_"))
-        For currentNumber = 1 To 14
+        For currentNumber = 0 To 14
 
-            For CurrentLetter = 1 To 4
+            For CurrentLetter = 0 To 4
                 If DisplayTracker(currentNumber, CurrentLetter) Then
-                    Slot = "|X  |"
+                    Slot = "|X  "
                 Else
-                    Slot = "|   |"
+                    Slot = "|   "
                 End If
                 Slot = Slot.PadLeft(4)
                 Console.Write(Slot)
