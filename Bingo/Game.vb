@@ -3,6 +3,7 @@
     Sub Main()
         Dim UserInput As String
         Do
+            Console.Clear()
             BingoBoard()
             Console.WriteLine()
             Console.WriteLine("Press ""d"" to draw ball")
@@ -24,17 +25,23 @@
     End Sub
 
     Sub DrawBall(Optional ClearCounter As Boolean = False)
-        Dim Temp(,) As Boolean = BingoTracker(0, 0)
+        Dim Temp(,) As Boolean = BingoTracker(0, 0, False)
         Dim CurrentBallNumber As Integer
         Dim CurrentBallLetter As Integer
         Static BallCounter As Integer
-        Do
-            CurrentBallNumber = RandomNumberBetween(0, 14) 'Get row
-            CurrentBallLetter = RandomNumberBetween(0, 4) 'Get columb
-        Loop Until Temp(CurrentBallNumber, CurrentBallLetter) = False Or BallCounter >= 75
-        BingoTracker(CurrentBallNumber, CurrentBallLetter, True, False)
-        BallCounter += 1
-        Console.WriteLine($"The current row is {CurrentBallLetter} and columb is {CurrentBallNumber}.")
+        If ClearCounter = False Then
+            Do
+                CurrentBallNumber = RandomNumberBetween(0, 14) 'Get row
+                CurrentBallLetter = RandomNumberBetween(0, 4) 'Get columb
+            Loop Until Temp(CurrentBallNumber, CurrentBallLetter) = False Or BallCounter >= 75
+            BingoTracker(CurrentBallNumber, CurrentBallLetter, True, False)
+            BallCounter += 1
+            Console.WriteLine($"The current row is {CurrentBallLetter} and columb is {CurrentBallNumber}.")
+        End If
+        If ClearCounter Then
+            BingoTracker(0, 0, False, True)
+            BallCounter = 0
+        End If
     End Sub
 
     Function RandomNumberBetween(Min As Integer, Max As Integer)
@@ -56,11 +63,10 @@
             'Clear the array
             ReDim Tracker(14, 4) 'with no preserve it will not save data when redim so we can use it to clear
         End If
-        Tracker(BallNumber, BallLetter) = True
-            Return Tracker
+        Return Tracker
     End Function
     Sub BingoBoard()
-        Dim Slot As String = "|x  "
+        Dim Slot As String = "x  |"
         Dim Heading() As String = {"B", "I", "N", "G", "O"}
         Dim DisplayTracker(,) As Boolean = BingoTracker(0, 0)
         For Each letter In Heading
@@ -69,12 +75,11 @@
         Console.WriteLine()
         Console.WriteLine(StrDup(20, "_"))
         For currentNumber = 0 To 14
-
             For CurrentLetter = 0 To 4
                 If DisplayTracker(currentNumber, CurrentLetter) Then
-                    Slot = "|X  "
+                    Slot = $"{FormatBallNumber(currentNumber, CurrentLetter)}|"
                 Else
-                    Slot = "|   "
+                    Slot = "   |"
                 End If
                 Slot = Slot.PadLeft(4)
                 Console.Write(Slot)
@@ -82,4 +87,9 @@
             Console.WriteLine()
         Next
     End Sub
+    Function FormatBallNumber(BallNumber As Integer, BallLetter As Integer) As String
+        Dim TheNumber As String
+        TheNumber = CStr((BallNumber + 1) + (BallLetter * 15))
+        Return TheNumber
+    End Function
 End Module
